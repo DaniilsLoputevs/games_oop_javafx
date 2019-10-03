@@ -71,6 +71,22 @@ public class Logic {
     public boolean isWin() {
         int[][] table = this.convert();
         boolean result = false;
+        for (int row = 0; row < table.length; row++) {
+            int winRowCount = 0;
+            int winCellCount = 0;
+            for (int cell = 0; cell < table.length; cell++) {
+                if (table[row][cell] == 1) {
+                    winRowCount++;
+                }
+                if (table[cell][row] == 1) {
+                    winCellCount++;
+                }
+                if (winCellCount == table.length || winRowCount == table.length) {
+                    result = true;
+                    break;
+                }
+            }
+        }
         return result;
     }
 
