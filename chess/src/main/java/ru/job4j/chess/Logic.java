@@ -22,16 +22,36 @@ public class Logic {
     }
 
     public boolean move(Cell source, Cell dest) {
-        boolean rst = false;
+        boolean result = false;
         int index = this.findBy(source);
+        boolean free = true;
+
         if (index != -1) {
             Cell[] steps = this.figures[index].way(source, dest);
-            if (steps.length > 0 && steps[steps.length - 1].equals(dest)) {
-                rst = true;
-                this.figures[index] = this.figures[index].copy(dest);
+
+            for (Cell step : steps) {
+                if (!free) {
+                    break;
+                }
+
+                for (Figure figure : figures) {
+                    if (step.equals(figure.position())) {
+                        free = false;
+                        break;
+                    }
+                }
             }
+
+
+            if (free) {
+                if (steps.length > 0 && steps[steps.length - 1].equals(dest)) {
+                    result = true;
+                    this.figures[index] = this.figures[index].copy(dest);
+                }
+            }
+
         }
-        return rst;
+        return result;
     }
 
     public void clean() {
