@@ -33,7 +33,6 @@ public class Logic {
                 if (!free) {
                     break;
                 }
-
                 for (Figure figure : figures) {
                     if (step.equals(figure.position())) {
                         free = false;
@@ -41,15 +40,10 @@ public class Logic {
                     }
                 }
             }
-
-
-            if (free) {
-                if (steps.length > 0 && steps[steps.length - 1].equals(dest)) {
-                    result = true;
-                    this.figures[index] = this.figures[index].copy(dest);
-                }
+            if (free && steps.length > 0) {
+                result = true;
+                this.figures[index] = this.figures[index].copy(dest);
             }
-
         }
         return result;
     }
