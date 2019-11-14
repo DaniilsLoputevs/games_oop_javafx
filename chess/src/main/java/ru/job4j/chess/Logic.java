@@ -24,23 +24,11 @@ public class Logic {
     public boolean move(Cell source, Cell dest) {
         boolean result = false;
         int index = this.findBy(source);
-        boolean free = true;
 
         if (index != -1) {
             Cell[] steps = this.figures[index].way(source, dest);
 
-            for (Cell step : steps) {
-                if (!free) {
-                    break;
-                }
-                for (Figure figure : figures) {
-                    if (step.equals(figure.position())) {
-                        free = false;
-                        break;
-                    }
-                }
-            }
-            if (free && steps.length > 0) {
+            if (isFree(steps) && steps.length > 0) {
                 result = true;
                 this.figures[index] = this.figures[index].copy(dest);
             }
@@ -64,6 +52,20 @@ public class Logic {
             }
         }
         return rst;
+    }
+
+    private boolean isFree(Cell[] steps) {
+        boolean result = true;
+        for (Cell step : steps) {
+            for (int j = 0; j < index; j++) {
+                if (figures[j] != null && step.equals(figures[j].position())) {
+                    result = false;
+                    break;
+                }
+            }
+            if (!result) { break; }
+        }
+        return result;
     }
 
     @Override
