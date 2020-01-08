@@ -2,13 +2,28 @@ package job4j.tictactoe;
 
 import java.util.function.Predicate;
 
+/**
+ * Логика Игрового поля.
+ * table - Само игровое поле.
+ */
 public class Logic3T {
     private final Figure3T[][] table;
 
+    // Constructor
     public Logic3T(Figure3T[][] table) {
         this.table = table;
     }
 
+    /** Основа проверки: Победная комбинация.
+     * Проверяет каждую клетку затронутую входными параметрами.
+     * То есть, входные параметры определяют "Какие именно" клетки будут проверяны.
+     * @param predicate - получит значения клетки.
+     * @param startX - начинать с клетки.
+     * @param startY - начинать с ряда.
+     * @param deltaX - заканчивать на клетке.
+     * @param deltaY - заканчивать на ряде.
+     * @return result - true/false.
+     */
     public boolean fillBy(Predicate<Figure3T> predicate, int startX, int startY, int deltaX, int deltaY) {
         boolean result = true;
         for (int index = 0; index != this.table.length; index++) {
@@ -23,20 +38,39 @@ public class Logic3T {
         return result;
     }
 
+    /** Проверка: Есть ли на поле победитель "X".
+     * Реализует проверку, используя "Основной метод" для проверки: fillBy()
+     * @return boolean (true/false)
+     */
     public boolean isWinnerX() {
         return this.fillBy(Figure3T::hasMarkX, 0, 0, 1, 0) ||
+                this.fillBy(Figure3T::hasMarkX, 0, 1, 1, 0) ||
+                this.fillBy(Figure3T::hasMarkX, 0, 2, 1, 0) ||
                 this.fillBy(Figure3T::hasMarkX, 0, 0, 0, 1) ||
+                this.fillBy(Figure3T::hasMarkX, 1, 0, 0, 1) ||
+                this.fillBy(Figure3T::hasMarkX, 2, 0, 0, 1) ||
                 this.fillBy(Figure3T::hasMarkX, 0,0, 1, 1) ||
                 this.fillBy(Figure3T::hasMarkX, this.table.length - 1 , 0, -1, 1);
     }
 
+    /** Проверка: Есть ли на поле победитель "O".
+     * Реализует проверку, используя "Основной метод" для проверки: fillBy()
+     * @return boolean (true/false)
+     */
     public boolean isWinnerO() {
         return this.fillBy(Figure3T::hasMarkO, 0, 0, 1, 0) ||
+                this.fillBy(Figure3T::hasMarkO, 0, 1, 1, 0) ||
+                this.fillBy(Figure3T::hasMarkO, 0, 2, 1, 0) ||
                 this.fillBy(Figure3T::hasMarkO, 0, 0, 0, 1) ||
+                this.fillBy(Figure3T::hasMarkO, 1, 0, 0, 1) ||
+                this.fillBy(Figure3T::hasMarkO, 2, 0, 0, 1) ||
                 this.fillBy(Figure3T::hasMarkO, 0,0, 1, 1) ||
-                this.fillBy(Figure3T::hasMarkO, this.table.length - 1, 0, -1, 1);
+                this.fillBy(Figure3T::hasMarkO, this.table.length - 1 , 0, -1, 1);
     }
 
+    /** Проверка: Есть ли свободные клетки.
+     * @return boolean (true/false)
+     */
     public boolean hasGap() {
         return true;
     }

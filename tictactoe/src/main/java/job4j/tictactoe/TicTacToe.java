@@ -22,6 +22,8 @@ public class TicTacToe extends Application {
     private final Figure3T[][] cells = new Figure3T[size][size];
     private final Logic3T logic = new Logic3T(cells);
 
+    /** Постройка игрового поля.
+     */
     private Figure3T buildRectangle(int x, int y, int size) {
         Figure3T rect = new Figure3T();
         rect.setX(x * size);
@@ -33,6 +35,12 @@ public class TicTacToe extends Application {
         return rect;
     }
 
+    /** Построить на поле: O
+     * @param x - размер
+     * @param y - размер
+     * @param size - размер
+     * @return "O"
+     */
     private Group buildMarkO(double x, double y, int size) {
         Group group = new Group();
         int radius = size / 2;
@@ -43,6 +51,8 @@ public class TicTacToe extends Application {
         return group;
     }
 
+    /** Показать Alert(message)
+     */
     private void showAlert(String message) {
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setTitle(JOB4J);
@@ -51,6 +61,9 @@ public class TicTacToe extends Application {
         alert.showAndWait();
     }
 
+    /** Проверка есть ли, свободные клетки.
+     * @return boolean (true/false)
+     */
     private boolean checkState() {
         boolean gap = this.logic.hasGap();
         if (!gap) {
@@ -59,6 +72,8 @@ public class TicTacToe extends Application {
         return gap;
     }
 
+    /** Проверка на победу X && O
+     */
     private void checkWinner() {
         if (this.logic.isWinnerX()) {
             this.showAlert("Победили Крестики! Начните новую Игру!");
@@ -67,6 +82,12 @@ public class TicTacToe extends Application {
         }
     }
 
+    /** Построить на поле: X
+     * @param x - размер
+     * @param y - размер
+     * @param size - размер
+     * @return "X"
+     */
     private Group buildMarkX(double x, double y, int size) {
         Group group = new Group();
         group.getChildren().addAll(
@@ -82,6 +103,10 @@ public class TicTacToe extends Application {
         return group;
     }
 
+    /** Логика от нажатия мышки.
+     * @param panel - ???
+     * @return - ???
+     */
     private EventHandler<MouseEvent> buildMouseEvent(Group panel) {
         return event -> {
             Figure3T rect = (Figure3T) event.getTarget();
@@ -103,6 +128,9 @@ public class TicTacToe extends Application {
         };
     }
 
+    /** Постройка игрового поля.
+     * @return - поле.
+     */
     private Group buildGrid() {
         Group panel = new Group();
         for (int y = 0; y != this.size; y++) {
@@ -116,7 +144,9 @@ public class TicTacToe extends Application {
         return panel;
     }
 
-
+    /** Старт всей FXJava + init()
+     * @param stage - #####
+     */
     @Override
     public void start(Stage stage) {
         BorderPane border = new BorderPane();
